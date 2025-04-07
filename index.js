@@ -1,4 +1,4 @@
-const { agregarjuego, obtenerJuegos, eliminarjuego } = require('./consultas')
+const { agregarjuego, obtenerJuegos, eliminarjuego, editarJuego } = require('./consultas')
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -25,5 +25,11 @@ app.delete("/juegos/:id", async (req, res) => {
     const { id } = req.params
     await eliminarjuego(id)
     res.send("Juego eliminado con éxito")
-    })
-    
+})
+
+app.put("/juegos/:id", async (req, res) => {
+    const { id } = req.params;
+    const { nombre, precio, stock } = req.body;
+    await editarJuego(id, nombre, precio, stock);
+    res.send("Juego actualizado con éxito");
+});
